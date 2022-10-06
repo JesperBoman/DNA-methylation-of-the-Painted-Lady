@@ -1,1 +1,1 @@
-# DNA-methylation---Painted-Lady
+# DNA-methylation of the Painted Lady butterfly
