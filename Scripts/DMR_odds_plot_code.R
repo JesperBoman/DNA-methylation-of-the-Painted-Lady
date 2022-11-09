@@ -17,9 +17,6 @@ ggplot(DMR_odds_data, aes(x = log10(Odds_ratio), y = reorder(Annotation, Odds_ra
   geom_vline(aes(xintercept = 0), size = .25, linetype = "dashed") + 
   scale_fill_manual(name="Comparison", values = c("purple", "lightgreen"))+
   geom_point(size = 3.5, position=position_dodge2(width=0.5), shape=21) +
-  #coord_trans(x = scales:::exp_trans(10)) +
-  #scale_x_continuous(breaks = log10(seq(0, 5.5, 1)), labels = seq(0, 5.5, 1),
-  #                   limits = log10(c(0.1,5.5))) +
   scale_x_continuous(breaks = log10(seq(0, 10, 1)), labels = seq(0, 10, 1),
                      limits = log10(c(0.1,10)), guide = guide_axis(check.overlap = TRUE)) +
   theme_bw()+
