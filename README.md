@@ -1,5 +1,6 @@
 # DNA-methylation of the Painted Lady butterfly
 
+![alt text](https://github.com/JesperBoman/DNA-methylation-of-the-Painted-Lady/blob/main/image_123986672.JPG)
 
 Bisulfite-sequencing data - order of analysis
 
