@@ -61,13 +61,13 @@ HDALvHDLI_ln=$(cat HDALvHDLI_resample_overlap <(echo $HDALvHDLI_overlap) | sort 
 HDALvLDAL_ln=$(cat HDALvLDAL_resample_overlap <(echo $HDALvLDAL_overlap) | sort -n | grep -n -w "$HDALvLDAL_overlap" | cut -f1 -d ":" | head -n1 )
 
 
-HDALvHDLI_pval=$(awk -v HDALvHDLI_ln=$HDALvHDLI_ln -v resamples=$resamples 'BEGIN{r=resamples+1-HDALvHDLI_ln; print r/(resamples)}')
-HDALvLDAL_pval=$(awk -v HDALvLDAL_ln=$HDALvLDAL_ln -v resamples=$resamples 'BEGIN{r=resamples+1-HDALvLDAL_ln; print r/(resamples)}')
+HDALvHDLI_prop=$(awk -v HDALvHDLI_ln=$HDALvHDLI_ln -v resamples=$resamples 'BEGIN{r=resamples+1-HDALvHDLI_ln; print r/(resamples)}')
+HDALvLDAL_prop=$(awk -v HDALvLDAL_ln=$HDALvLDAL_ln -v resamples=$resamples 'BEGIN{r=resamples+1-HDALvLDAL_ln; print r/(resamples)}')
 
 
-# DMR total length, DMR annotation overlap, annotation as a fraction of the genome, odds ratio of DMRs overlapping annotation, empirical p-value 
-awk -v annot_len=$annot_len -v genome_len=$genome_len -v HDALvHDLI_DMR_len=$HDALvHDLI_DMR_len -v HDALvHDLI_overlap=$HDALvHDLI_overlap -v HDALvHDLI_pval=$HDALvHDLI_pval -v shortAnnot=$shortAnnot 'BEGIN{print HDALvHDLI_DMR_len "\t" HDALvHDLI_overlap  "\t" annot_len/genome_len "\t" (HDALvHDLI_overlap/HDALvHDLI_DMR_len)/(annot_len/genome_len) "\t" HDALvHDLI_pval "\t" "HDALvHDLI" "\t" shortAnnot}' >> annotation_overlap/stats_HDALvHDLI
-awk -v annot_len=$annot_len -v genome_len=$genome_len -v HDALvLDAL_DMR_len=$HDALvLDAL_DMR_len -v HDALvLDAL_overlap=$HDALvLDAL_overlap -v HDALvLDAL_pval=$HDALvLDAL_pval -v shortAnnot=$shortAnnot 'BEGIN{print HDALvLDAL_DMR_len "\t" HDALvLDAL_overlap  "\t" annot_len/genome_len "\t" (HDALvLDAL_overlap/HDALvLDAL_DMR_len)/(annot_len/genome_len) "\t" HDALvLDAL_pval "\t" "HDALvLDAL" "\t" shortAnnot}' >> annotation_overlap/stats_HDALvLDAL
+# DMR total length, DMR annotation overlap, annotation as a fraction of the genome, odds ratio of DMRs overlapping annotation, empirical proportion of samples with greater overlap than observed. Can be transformed to two-tailed p-values through the following formula: if prop < 0.5 (i.e. lower tail) prop*2, if prob > 0.5 then take (1-prop)*2
+awk -v annot_len=$annot_len -v genome_len=$genome_len -v HDALvHDLI_DMR_len=$HDALvHDLI_DMR_len -v HDALvHDLI_overlap=$HDALvHDLI_overlap -v HDALvHDLI_prop=$HDALvHDLI_prop -v shortAnnot=$shortAnnot 'BEGIN{print HDALvHDLI_DMR_len "\t" HDALvHDLI_overlap  "\t" annot_len/genome_len "\t" (HDALvHDLI_overlap/HDALvHDLI_DMR_len)/(annot_len/genome_len) "\t" HDALvHDLI_prop "\t" "HDALvHDLI" "\t" shortAnnot}' >> annotation_overlap/stats_HDALvHDLI
+awk -v annot_len=$annot_len -v genome_len=$genome_len -v HDALvLDAL_DMR_len=$HDALvLDAL_DMR_len -v HDALvLDAL_overlap=$HDALvLDAL_overlap -v HDALvLDAL_prop=$HDALvLDAL_prop -v shortAnnot=$shortAnnot 'BEGIN{print HDALvLDAL_DMR_len "\t" HDALvLDAL_overlap  "\t" annot_len/genome_len "\t" (HDALvLDAL_overlap/HDALvLDAL_DMR_len)/(annot_len/genome_len) "\t" HDALvLDAL_prop "\t" "HDALvLDAL" "\t" shortAnnot}' >> annotation_overlap/stats_HDALvLDAL
 
 
 rm HDALvHDLI_resample_overlap
