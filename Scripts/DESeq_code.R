@@ -47,7 +47,7 @@ expr.res.HDALvHDLI.df <- expr.res.HDALvHDLI.df[!is.na(expr.res.HDALvHDLI.df$padj
 str(expr.res.HDALvHDLI.df[expr.res.HDALvHDLI.df$padj  < 0.1,])
 
 
-
+#Testing the overlap between DMRs and DE genes
 
 HDALvLDAL_DMR_genes <- read.table("HDALvLDAL.Genes.geneIDs.list")
 colnames(HDALvLDAL_DMR_genes) <- c("gene", "direction")
