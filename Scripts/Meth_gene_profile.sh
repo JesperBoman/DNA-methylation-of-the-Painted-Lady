@@ -173,3 +173,20 @@ awk 'FNR==NR{if($11 == "intron"){intSeg[$1 "\t" $2 "\t" $3]= $12} else{exSeg[$1 
  FNR!=NR{seg=$1 "\t" $2 "\t" $3; if(seg in intSeg){print $0 "\t" intSeg[seg]} else if(seg in exSeg){print $0 "\t" exSeg[seg]} else{print $0 "\t" "NA"}}' <(cat genes_5n3p_5kb_flanks_100bp_seg_intronOverlap.bed genes_5n3p_5kb_flanks_100bp_seg_exonOverlap.bed)  $meth_table > ${meth_table}_ExIn
 
 
+
+
+
+# CpG density and GC content annotation #
+
+module load bioinfo-tools BEDTools/2.29.2
+
+genome="/crex/proj/uppstore2017185/b2014034_nobackup/Jesper/VanessaDNAm/reference/GCA_905220365.1_ilVanCard2.1_genomic_chroms.fasta"
+
+bedtools nuc -bed genes_5n3p_5kb_flanks_100bp_seg.bed -fi $genome -pattern CG | awk 'NR>1{totbases=$9+$10+$11+$12; if(totbases != 0 && ($10 < 95) && ($11 < 95) ){print $1 "\t" $2 "\t" $3 "\t"  ($10+$11)/totbases "\t" ($10*$11)/(totbases) "\t" $16} else{print $1 "\t" $2 "\t" $3 "\t" "NA" "\t" "NA" "\t" "NA"}}' > genes_5n3p_5kb_flanks_100bp_seg_GC_content_CpGOE.bed
+
+meth_table="meth_gene_5kb_flanks_100bp_seg_data_coords_expr"
+
+awk 'FNR==NR{a[$1 "\t" $2 "\t" $3]=$4 "\t" $5 "\t" $6}
+ FNR!=NR{seg=$1 "\t" $2 "\t" $3; if(seg in a){print $0 "\t" a[seg]} else{print $0 "\t" "NA" "\t" "NA" "\t" "NA"}}' genes_5n3p_5kb_flanks_100bp_seg_GC_content_CpGOE.bed ${meth_table}_ExIn > ${meth_table}_ExIn_CpG
+
+
