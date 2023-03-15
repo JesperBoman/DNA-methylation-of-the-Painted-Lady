@@ -59,4 +59,17 @@ ggplot(data=all.res2, aes(x=Segment_number, y=Methylation_level*100, col=Express
   scale_x_continuous(name ="", labels=c("-5 kb","TSS","Gene Body","TTS","5 kb"))+
   theme(aspect.ratio=1, legend.position="top", panel.border = element_rect(colour = "black", fill=NA, size=1), plot.title = element_text(face = "bold", hjust = 0.5), axis.text=element_text(size=23, colour="black"), axis.title=element_text(size=26), legend.text=element_text(size=14),  legend.title=element_text(size=14))
 
-#Add your favourite output function here
+#Local polynomial regression
+ggplot(data=all.res2, aes(x=Segment_number, y=Methylation_level*100, col=Expression_cat, fill=Expression_cat, group=interaction(Sample, Expression_cat))) +
+  theme_classic()+
+  #geom_line() +
+  geom_smooth(method = 'loess', formula = 'y ~ x', alpha=0.2, span=0.2)+
+  scale_color_manual(name="Expression category", values = c("#1E88E5", "#FFC107", "#D81B60"), labels = c("Low", "Medium", "High")) +
+  scale_fill_manual(name="Expression category", values = c("#1E88E5", "#FFC107", "#D81B60"), labels = c("Low", "Medium", "High")) +
+  ylab("Methylation level (%)")+
+  ylim(0,18)+
+  geom_vline(xintercept=50, alpha=0.3)+
+  geom_vline(xintercept=150, alpha=0.3)+
+  scale_x_continuous(name ="", labels=c("-5 kb","TSS","Gene Body","TTS","5 kb"))+
+  theme(aspect.ratio=1, legend.position="top", panel.border = element_rect(colour = "black", fill=NA, size=1), plot.title = element_text(face = "bold", hjust = 0.5), axis.text=element_text(size=23, colour="black"), axis.title=element_text(size=26), legend.text=element_text(size=14),  legend.title=element_text(size=14))
+
