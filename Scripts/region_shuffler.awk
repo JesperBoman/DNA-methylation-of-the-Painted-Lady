@@ -33,7 +33,7 @@ sequence[n++] = $1;
 prev=prev+($2/genome_len)
 }
 
-#Second file should be a bed file
+#Second file should be a bed file with a header, change it if doesn't have a header
 
 FNR!=NR && FNR > 1{
 
