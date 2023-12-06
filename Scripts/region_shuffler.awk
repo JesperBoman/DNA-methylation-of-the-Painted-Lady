@@ -48,6 +48,8 @@ chrpick=sequence[i];
 rand_end=int(rand()*chrom_len[chrpick]);
 rand_start=rand_end-DMR_len;
 
+#This is an approximation that works well if you are shuffling regions much smaller than the average chromosome size.
+#What could happen here is that the end overshoots, since we do not double check with annotation. Bedtools doesn't seem to mind.
 if(rand_start<0){
 rand_start=rand_end;
 rand_end=rand_end+DMR_len}
