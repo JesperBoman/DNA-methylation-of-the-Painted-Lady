@@ -1,5 +1,7 @@
 # DNA-methylation of the Painted Lady butterfly
 
+Boman J, Zhu Y, Höök L, Vila R, Talavera G, Backström N (2023) Environmental stress during larval development induces DNA methylation shifts in the migratory painted lady butterfly (*Vanessa cardui*). Mol Ecol 32:3513–3523. https://doi.org/10.1111/MEC.16957
+
 
 Bisulfite-sequencing data - order of analysis
 
