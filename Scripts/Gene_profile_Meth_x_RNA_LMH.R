@@ -31,6 +31,7 @@ for (ind in unique(data$Sample)){
 
 data<-data[!is.na(data$Mean_per_dinuc),]
 
+#You can modify the vector below: c("Segment_number..., and add another factor, such as tissue
 res_up_and_down <- ddply(data[data$Segment_type != "Genic",], c("Segment_number", "Segment_type", "Sample", "Expression_cat"),function(x) mean(x$Mean_per_dinuc, na.rm=T))
 
 subData <- data[-grep("stream", data$Segment_type),]
@@ -38,6 +39,7 @@ br <- quantile(subData$Coordinate, seq(0, 1, length=100), na.rm=TRUE)
 mid <- br[-length(br)] + diff(br)/2
 subData$Segment_number <- cut(subData$Coordinate, breaks=br, labels=51:149, include.lowest=T)
 
+#You can modify the vector below: c("Segment_number..., and add another factor, such as tissue
 res_body <- ddply(subData, c("Segment_number", "Segment_type", "Sample", "Expression_cat"),function(x) mean(x$Mean_per_dinuc, na.rm=T))
 
 
